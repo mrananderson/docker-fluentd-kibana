@@ -1,6 +1,6 @@
 # Pull base image.
-FROM dockerfile/java
-MAINTAINER Harley Bussell <modmac@gmail.com>
+FROM amitanandj/javadockerfile
+MAINTAINER Amit Anand <amitanandj@hotmail.com>
 
 # Install ElasticSearch.
 RUN \
