@@ -38,7 +38,7 @@ Run the image:
 
 Note you may want to change the volume -v parameter to set a different data directory used by Elasticsearch.
 
-    sudo docker run -p 9200:9200 -p 9300:9300 -p 24224:24224 -p 8080:80 -v /var/data/log_index:/data  --name fluentd_kibana_inst -i -t sstarmind/log_fluentd_kibana
+    sudo docker run -p 9200:9200 -p 9300:9300 -p 24224:24224 -p 8080:80 -v /var/data/log_index:/data  --name fluentd_kibana_inst -i -t starmind/log_fluentd_kibana
 
 Running with systemd:
     
