@@ -17,7 +17,9 @@ apt-get update && \
 apt-get install -y --force-yes td-agent
 RUN td-agent --setup=/etc/fluent && \
     mkdir -p /var/log/fluent
-
+    
+# copy fluent config
+ADD config/etc/fluent/fluent.conf /etc/fluent/fluent.conf    
 
 # Install Nginx.
 RUN \
@@ -48,10 +50,6 @@ RUN apt-get install -y --no-install-recommends supervisor
 
 # Copy supervisor config.
 ADD config/etc/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
-
-
-#CMD ["fluentd", "--conf=/etc/fluent/fluent.conf"]
-
 
 # Define mountable directories.
 VOLUME ["/data", "/var/log", "/etc/nginx/sites-enabled"]
