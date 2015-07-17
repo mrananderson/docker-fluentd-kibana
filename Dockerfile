@@ -1,5 +1,5 @@
 # Pull base image.
-FROM dockerfile/java
+FROM java:8
 MAINTAINER Harley Bussell <modmac@gmail.com>
 
 # Install ElasticSearch.
@@ -11,21 +11,16 @@ RUN \
   mv /tmp/elasticsearch-1.2.1 /elasticsearch
 
 # Install Fluentd.
-RUN echo "deb http://packages.treasure-data.com/precise/ precise contrib" > /etc/apt/sources.list.d/treasure-data.list && \
-    apt-get update && \
-    apt-get install -y --force-yes libssl0.9.8 td-agent && \
-    apt-get clean
-ENV GEM_HOME /usr/lib/fluent/ruby/lib/ruby/gems/1.9.1/
-ENV GEM_PATH /usr/lib/fluent/ruby/lib/ruby/gems/1.9.1/
-ENV PATH /usr/lib/fluent/ruby/bin:$PATH
-RUN fluentd --setup=/etc/fluent && \
+RUN curl https://packages.treasuredata.com/GPG-KEY-td-agent | apt-key add - && \
+echo "deb http://packages.treasuredata.com/2/ubuntu/precise/ precise contrib" > /etc/apt/sources.list.d/treasure-data.list && \
+apt-get update && \
+apt-get install -y --force-yes td-agent
+RUN td-agent --setup=/etc/fluent && \
     mkdir -p /var/log/fluent
 
 
 # Install Nginx.
 RUN \
-  add-apt-repository -y ppa:nginx/stable && \
-  apt-get update && \
   apt-get install -y nginx && \
   echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
   chown -R www-data:www-data /var/lib/nginx
