@@ -17,9 +17,12 @@ apt-get update && \
 apt-get install -y --force-yes td-agent
 RUN td-agent --setup=/etc/fluent && \
     mkdir -p /var/log/fluent
-    
+
+# add fluent plugins
+RUN /usr/sbin/td-agent-gem install fluent-plugin-secure-forward && /usr/sbin/td-agent-gem install fluent-plugin-elasticsearch
+
 # copy fluent config
-ADD config/etc/fluent/fluent.conf /etc/fluent/fluent.conf    
+ADD config/etc/fluent/fluent.conf /etc/fluent/fluent.conf
 
 # Install Nginx.
 RUN \
