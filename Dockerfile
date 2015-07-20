@@ -59,7 +59,6 @@ ADD config/etc/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
 CMD ["fluentd", "--conf=/etc/fluent/fluent.conf"]
 
-
 # Define mountable directories.
 VOLUME ["/data", "/var/log", "/etc/nginx/sites-enabled"]
 
