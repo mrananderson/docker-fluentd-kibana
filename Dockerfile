@@ -19,6 +19,8 @@ ENV GEM_HOME /usr/lib/fluent/ruby/lib/ruby/gems/1.9.1/
 ENV GEM_PATH /usr/lib/fluent/ruby/lib/ruby/gems/1.9.1/
 ENV PATH /usr/lib/fluent/ruby/bin:$PATH
 RUN fluentd --setup=/etc/fluent && \
+    fluent-gem install fluent-plugin-elasticsearch \
+    fluent-plugin-secure-forward fluent-plugin-record-modifier fluent-plugin-exclude-filter && \
     mkdir -p /var/log/fluent
 
 
