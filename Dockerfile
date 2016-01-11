@@ -23,6 +23,8 @@ RUN fluentd --setup=/etc/fluent && \
     fluent-plugin-secure-forward fluent-plugin-record-reformer fluent-plugin-exclude-filter && \
     mkdir -p /var/log/fluent
 
+ADD config/etc/fluent/fluent.conf /etc/td-agent/td-agent.conf
+
 
 # Install Nginx.
 RUN \
@@ -57,7 +59,7 @@ RUN apt-get install -y --no-install-recommends supervisor
 ADD config/etc/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
 
-CMD ["fluentd", "--conf=/etc/fluent/fluent.conf"]
+CMD ["fluentd", "--conf=/etc/td-agent/td-agent.conf"]
 
 # Define mountable directories.
 VOLUME ["/data", "/var/log", "/etc/nginx/sites-enabled"]
