@@ -11,18 +11,12 @@ RUN \
   mv /tmp/elasticsearch-1.2.1 /elasticsearch
 
 # Install Fluentd.
-RUN curl https://packages.treasuredata.com/GPG-KEY-td-agent | apt-key add - && \
-echo "deb http://packages.treasuredata.com/2/ubuntu/precise/ precise contrib" > /etc/apt/sources.list.d/treasure-data.list && \
-apt-get update && \
-apt-get install -y --force-yes td-agent
-RUN td-agent --setup=/etc/fluent && \
-    mkdir -p /var/log/fluent
+RUN curl -L https://toolbelt.treasuredata.com/sh/install-ubuntu-trusty-td-agent2.sh | sh --force-yes
 
-# add fluent plugins
-RUN /usr/sbin/td-agent-gem install fluent-plugin-secure-forward && /usr/sbin/td-agent-gem install fluent-plugin-elasticsearch
+RUN /usr/sbin/td-agent-gem install fluent-plugin-elasticsearch fluent-plugin-secure-forward fluent-plugin-record-reformer
 
 # copy fluent config
-ADD config/etc/fluent/fluent.conf /etc/fluent/fluent.conf
+ADD config/etc/fluent/fluent.conf /etc/td-agent/td-agent.conf
 
 # Install Nginx.
 RUN \
