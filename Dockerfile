@@ -68,8 +68,6 @@ WORKDIR /
 # Set default command to supervisor.
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
-ADD config/etc/elasticsearch/elasticsearch.yml /elasticsearch/config/elasticsearch.yml
-
 # Expose Elasticsearch ports.
 #   - 9200: HTTP
 #   - 9300: transport
