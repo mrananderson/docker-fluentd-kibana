@@ -10,10 +10,7 @@ RUN \
   rm -f elasticsearch-1.2.1.tar.gz && \
   mv /tmp/elasticsearch-1.2.1 /elasticsearch
 
-# Install Fluentd.
-RUN curl https://packages.treasuredata.com/GPG-KEY-td-agent | apt-key add -
-RUN echo "deb http://packages.treasuredata.com/2/ubuntu/precise/ precise contrib" > /etc/apt/sources.list.d/treasure-data.list
-RUN    apt-get update
+RUN apt-get update
 RUN apt-get clean
 
 RUN apt-get -y install curl libcurl4-openssl-dev ruby ruby-dev make build-essential
