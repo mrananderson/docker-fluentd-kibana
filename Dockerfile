@@ -11,19 +11,20 @@ RUN \
   mv /tmp/elasticsearch-1.2.1 /elasticsearch
 
 # Install Fluentd.
-RUN echo "deb http://packages.treasure-data.com/precise/ precise contrib" > /etc/apt/sources.list.d/treasure-data.list && \
-    apt-get update && \
-    apt-get install -y --force-yes libssl0.9.8 td-agent && \
-    apt-get clean
-ENV GEM_HOME /usr/lib/fluent/ruby/lib/ruby/gems/1.9.1/
-ENV GEM_PATH /usr/lib/fluent/ruby/lib/ruby/gems/1.9.1/
-ENV PATH /usr/lib/fluent/ruby/bin:$PATH
-RUN fluentd --setup=/etc/fluent && \
-    /usr/lib/fluent/ruby/bin/fluent-gem install fluent-plugin-elasticsearch \
-    fluent-plugin-secure-forward fluent-plugin-record-reformer fluent-plugin-exclude-filter && \
+RUN curl https://packages.treasuredata.com/GPG-KEY-td-agent | apt-key add - && \
+echo "deb http://packages.treasuredata.com/2/ubuntu/precise/ precise contrib" > /etc/apt/sources.list.d/treasure-data.list && \
+apt-get update && \
+apt-get install -y --force-yes td-agent
+RUN td-agent --setup=/etc/fluent && \
     mkdir -p /var/log/fluent
 
-ADD config/etc/fluent/td-agent.conf /etc/td-agent/td-agent.conf
+# add fluent plugins
+RUN /usr/sbin/td-agent-gem install fluent-plugin-secure-forward && /usr/sbin/td-agent-gem install fluent-plugin-elasticsearch
+
+# copy fluent config
+ADD config/etc/fluent/fluent.conf /etc/fluent/fluent.conf
+
+#ADD config/etc/fluent/td-agent.conf /etc/td-agent/td-agent.conf
 
 
 # Install Nginx.
@@ -59,7 +60,7 @@ RUN apt-get install -y --no-install-recommends supervisor
 ADD config/etc/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
 
-CMD ["fluentd", "--conf=/etc/fluent/fluent.conf"]
+#CMD ["fluentd", "--conf=/etc/fluent/fluent.conf"]
 
 # Define mountable directories.
 VOLUME ["/data", "/var/log", "/etc/nginx/sites-enabled"]
