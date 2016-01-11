@@ -18,13 +18,23 @@ RUN apt-get clean
 
 RUN apt-get -y install curl libcurl4-openssl-dev ruby ruby-dev make build-essential
 
-RUN gem install fluentd fluent-plugin-elasticsearch --no-ri --no-rdoc
-RUN fluentd --setup ./fluent
+# Install Fluentd.
+RUN echo "deb http://packages.treasure-data.com/precise/ precise contrib" > /etc/apt/sources.list.d/treasure-data.list && \
+    apt-get update && \
+    apt-get install -y --force-yes libssl0.9.8 software-properties-common td-agent && \
+    apt-get clean
+ENV GEM_HOME /usr/lib/fluent/ruby/lib/ruby/gems/1.9.1/
+ENV GEM_PATH /usr/lib/fluent/ruby/lib/ruby/gems/1.9.1/
+ENV PATH /usr/lib/fluent/ruby/bin:$PATH
+RUN fluentd --setup=/etc/fluent && \
+    /usr/lib/fluent/ruby/bin/fluent-gem install fluent-plugin-elasticsearch \
+    fluent-plugin-secure-forward fluent-plugin-record-reformer fluent-plugin-exclude-filter && \
+    mkdir -p /var/log/fluent
 
 # Copy fluentd config
 ADD config/etc/fluent/fluent.conf /etc/td-agent/td-agent.conf
+ADD config/etc/fluent/fluent.conf /etc/fluent/fluent.conf
 
-RUN apt-get install -y software-properties-common
 
 # Install Nginx.
 RUN \
