@@ -48,10 +48,10 @@ ADD config/etc/nginx/kibana.conf /etc/nginx/sites-enabled/default
 # Install Kibana.
 RUN \
   cd /tmp && \
-  wget https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz && \
-  tar xvzf kibana-3.1.0.tar.gz && \
-  rm -f kibana-3.1.0.tar.gz && \
-  mv kibana-3.1.0 /usr/share/kibana
+  wget https://download.elastic.co/kibana/kibana/kibana-4.3.1-linux-x64.tar.gz && \
+  tar xvzf kibana-4.3.1-linux-x64.tar.gz && \
+  rm -f kibana-4.3.1-linux-x64.tar.gz && \
+  mv kibana-4.3.1-linux-x64 /usr/share/kibana
 
 #RUN cp -R /usr/share/kibana/* /
 
