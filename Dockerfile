@@ -51,7 +51,7 @@ RUN \
   wget https://download.elastic.co/kibana/kibana/kibana-4.3.1-linux-x64.tar.gz && \
   tar xvzf kibana-4.3.1-linux-x64.tar.gz && \
   rm -f kibana-4.3.1-linux-x64.tar.gz && \
-  mv kibana-4.3.1 /usr/share/kibana
+  mv kibana-4.3.1-linux-x64 /usr/share/kibana
 
 
 # Copy kibana config.
