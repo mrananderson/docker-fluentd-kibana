@@ -2,7 +2,7 @@
 FROM amitanandj/javadockerfile
 MAINTAINER Amit Anand <amitanandj@hotmail.com>
 
-RUN apt-get -y install --force-yes build-essential curl libcurl4-openssl-dev libssl0.9.8 software-properties-common ruby ruby-dev make
+RUN apt-get install -y --force-yes build-essential curl libcurl4-openssl-dev libssl0.9.8 software-properties-common ruby ruby-dev make
 RUN apt-get update
 RUN apt-get clean
 
