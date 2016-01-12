@@ -5,10 +5,10 @@ MAINTAINER Amit Anand <amitanandj@hotmail.com>
 # Install ElasticSearch.
 RUN \
   cd /tmp && \
-  wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.2.1.tar.gz && \
-  tar xvzf elasticsearch-1.2.1.tar.gz && \
-  rm -f elasticsearch-1.2.1.tar.gz && \
-  mv /tmp/elasticsearch-1.2.1 /elasticsearch
+  wget https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.1.1/elasticsearch-2.1.1.tar.gz && \
+  tar xvzf elasticsearch-2.1.1.tar.gz && \
+  rm -f elasticsearch-2.1.1.tar.gz && \
+  mv /tmp/elasticsearch-2.1.1 /elasticsearch
 
 RUN apt-get update
 RUN apt-get clean
