@@ -2,18 +2,18 @@
 FROM amitanandj/javadockerfile
 MAINTAINER Amit Anand <amitanandj@hotmail.com>
 
+RUN apt-get update
+RUN apt-get -y install curl libcurl4-openssl-dev ruby ruby-dev make build-essential
 # Install ElasticSearch.
 RUN \
   cd /tmp && \
   wget https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.1.1/elasticsearch-2.1.1.tar.gz && \
   tar xvzf elasticsearch-2.1.1.tar.gz && \
   rm -f elasticsearch-2.1.1.tar.gz && \
-  mv /tmp/elasticsearch-2.1.1.tar.gz /elasticsearch
+  mv /tmp/elasticsearch-2.1.1 /elasticsearch
 
-RUN apt-get update
+
 RUN apt-get clean
-
-RUN apt-get -y install curl libcurl4-openssl-dev ruby ruby-dev make build-essential
 
 # Install Fluentd.
 RUN echo "deb http://packages.treasure-data.com/precise/ precise contrib" > /etc/apt/sources.list.d/treasure-data.list && \
