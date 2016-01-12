@@ -2,7 +2,7 @@
 FROM amitanandj/javadockerfile
 MAINTAINER Amit Anand <amitanandj@hotmail.com>
 
-RUN apt-get -y install curl libcurl4-openssl-dev ruby ruby-dev make build-essential
+RUN apt-get -y install --force-yes build-essential curl libcurl4-openssl-dev libssl0.9.8 software-properties-common ruby ruby-dev make
 RUN apt-get update
 RUN apt-get clean
 
@@ -17,7 +17,7 @@ RUN \
 # Install Fluentd.
 RUN echo "deb http://packages.treasure-data.com/precise/ precise contrib" > /etc/apt/sources.list.d/treasure-data.list && \
     apt-get update && \
-    apt-get install -y --force-yes libssl0.9.8 software-properties-common td-agent && \
+    apt-get install -y --force-yes td-agent && \
     apt-get clean
 ENV GEM_HOME /usr/lib/fluent/ruby/lib/ruby/gems/1.9.1/
 ENV GEM_PATH /usr/lib/fluent/ruby/lib/ruby/gems/1.9.1/
