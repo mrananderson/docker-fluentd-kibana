@@ -2,8 +2,10 @@
 FROM amitanandj/javadockerfile
 MAINTAINER Amit Anand <amitanandj@hotmail.com>
 
-RUN apt-get update
 RUN apt-get -y install curl libcurl4-openssl-dev ruby ruby-dev make build-essential
+RUN apt-get update
+RUN apt-get clean
+
 # Install ElasticSearch.
 RUN \
   cd /tmp && \
@@ -11,9 +13,6 @@ RUN \
   tar xvzf elasticsearch-2.1.1.tar.gz && \
   rm -f elasticsearch-2.1.1.tar.gz && \
   mv /tmp/elasticsearch-2.1.1 /elasticsearch
-
-
-RUN apt-get clean
 
 # Install Fluentd.
 RUN echo "deb http://packages.treasure-data.com/precise/ precise contrib" > /etc/apt/sources.list.d/treasure-data.list && \
@@ -48,11 +47,12 @@ ADD config/etc/nginx/kibana.conf /etc/nginx/sites-enabled/default
 # Install Kibana.
 RUN \
   cd /tmp && \
-  wget https://download.elastic.co/kibana/kibana/kibana-4.3.1-linux-x64.tar.gz && \
-  tar xvzf kibana-4.3.1-linux-x64.tar.gz && \
-  rm -f kibana-4.3.1-linux-x64.tar.gz && \
-  mv kibana-4.3.1-linux-x64 /usr/share/kibana
+  wget https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz && \
+  tar xvzf kibana-3.1.0.tar.gz && \
+  rm -f kibana-3.1.0.tar.gz && \
+  mv kibana-3.1.0 /usr/share/kibana
 
+#RUN cp -R /usr/share/kibana/* /
 
 # Copy kibana config.
 ADD config/etc/kibana/config.js /usr/share/kibana/config.js
